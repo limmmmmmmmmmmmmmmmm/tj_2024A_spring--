@@ -1,0 +1,27 @@
+
+
+.viewBox{
+    margin-top: 20px;
+    padding: 10px;
+}
+.viewBox > .bTitle{
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+.viewBox > .bContent{
+    min-height: 500px; /* 글이 없을때도 최소높이 고정 */
+    border-top: 1px solid #eeeeee; padding: 15px 0px;
+}
+.viewBox > .etcBox > span{
+    margin-right: 10px ;
+}
+.viewBox > .btnBox{
+    border-top: 1px solid #eeeeee; padding: 15px 0px;
+}
+
+.viewBox > .bFile{
+    border-top: 1px solid #eeeeee; padding: 15px 0px;
+}
+
+

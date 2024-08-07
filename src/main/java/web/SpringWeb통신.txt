@@ -1,0 +1,113 @@
+    [1] HTTP : 하이퍼텍스트 통신규약
+        - 상태가 무상재 프로토콜 이다.
+        - 독립적이다. 데이터 주고 받기 위한 각각의 데이터 요청과 응답
+        - HTTP1.1 (주로 사용되는 버전)
+        - 경로 : 통신할 웹 자원 위치 [URI > URL]
+            http://localhost:8080/board/view?bno=3
+            1. URL : 웹 주소, 네트워크 상의 리소스가 어디에 있는지 알려주는 규약
+                http://localhost:8080/board/view
+            2. URI : 각종 정보들의 유일한 이름이나 위치를 표시하는 규약
+                쿼리스트링 방식 : http://localhost:8080/board/view?bno=3
+                경로매개변수 방식 : http://localhost:8080/board/view/3
+                내부위치이동 방식 : http://localhost:8080/board/view#id명
+        - HTTPS : HTTP의 보안이 강화된 버전이다.
+            - 통신의 인증과 암호화 위해 만들어진 프로토콜
+            - 인증서 발급 업체로 부터 발급받는다. ex) 건강보험, 자동차 보험
+            - 해당 웹페이지에서 문제 발생시 보상해주는 보험 같은 개념
+
+    [1-1] HTTP HEADER (HTTP 통신 정보)
+        1. host : 요청이 전송되는 타켓의 url 주소
+        2. contentType : 요청과 응답 보내는 데이터의 type 타입 정보, 받는 쪽에서 데이터를 어떻게 처리 할지 판단한다.
+            - application/json, text/html, application/form-urlencoded, multipart/~~~
+        3. body : 데이터의 본문
+            - POST, PUT 사용가능 / GET,DELETE 사용 X
+
+
+    [1-2] HTTP METHOD
+        1. GET    : REST API 에서는 주로 자원 호출 요청 [R]
+        2. POST   : REST API 에서는 주로 자원 저장 요청 [C]
+        3. PUT    : REST API 에서는 주로 자원 수정 요청 [U]
+        4. DELETE : REST API 에서는 주로 자원 삭제 요청 [D]
+
+
+    [1-3] HTTP 사용하는 소프트웨어, 라이브러리, 프레임워크
+        1. 브라우저(크롬,엣지,사파리) 2. JQUERY(AJAX) 3.아파치톰캣 4.Spring @Controller 5.Talend Api
+
+    * 데이터와 타입
+        - 데이터/ 자료 : 순수한 정보
+        - 타입 : 정보를 분류, 자료의 식별, 자원의 사용시 해당 자원의 사용방법을 정의
+            - java : String 타입 -> "3", int 타입 -> 3 , byte 타입 -> 3
+
+    * REST API : 자원의 상태를 주고 받는 구조/아키텍처
+
+    * 쿼리스트링 과 BODY
+        - 편지 봉투 : 보낸사람, 받는사람
+        - 편지지 : 내용물
+        ex 1 ] POST, BODY O
+            편지봉투: 받는사람 : http://localhost:8080/board/view
+            편지지 : {bno : 1}
+        ex 2 ] GET, BODY X
+            편지봉투 : 받는사람 : http://localhost:8080/board/view?bno=3
+            편지지 : X
+        - 쿼리스트링 : URL 상의 자원의 정보가 노출이 된다. (보안 X)
+        - BODY : URL 상의 자원정보가 노출이 안된다 (보안 O)
+                    개인정보 존재하는 데이터는 POST,GET 사용한다.
+
+    * HTTP 통신 예시
+        생활속예시] 핸드폰 <--------> 핸드폰, 공중전화기 <---------> 핸드폰
+
+
+        ex 1] AJAX (HTTP) -------------->아파치 톰캣 서버(HTTP)
+        ex 2] 크롬 브라우저 (HTTP) -------------->아파치 톰캣 서버(HTTP)
+        ex 3] Talend Api (HTTP) -------------->아파치 톰캣 서버(HTTP)
+
+
+    [2] 웹 서버
+        - 클라이언트의 요청으로부터 자원을 응답하는 컴퓨터/소프트웨어
+        - 종류 : 정적 서버(static pages), 동적 서버(dynamic pages)
+            - 정적서버 : html, css, js, img 등등 파일들, 아파치 서버 프로그램
+            - 동적서버 : servlet, jsp, 타임리프(html), 머스테치 등등 파일들, 톰캣 서버 프로그램
+            - 아파치 톰캣 서버 프로그램 : 정적서버와 동적서버 동시에 지원한다.
+
+    [2-1] WAS : Web Application Server
+        - 개념
+            1. Web 서버 프로그램이 섩치된 컴퓨터
+            2. http 로 부터 요청을 받아 정적/동적 파일 제공하는 컴퓨터
+            3. 쿨라이언트의 요청을 WAS에게 보내고 WAS에서 처리한 결과를 클라이언트에게 전달하는 방식
+            4. WAS는 웹서버, 웹컨테이너, 서블릿 컨테이너 라고도 불린다.
+        - 역할
+            1. Web server(정적 파일) + Web Container(동적 파일)
+            2. 비지니스/서비스 로직 수정
+            3. 여러개 요청을 관리 기능
+
+    [2-2] 동작 구조
+        1. 클라이언트가 HTTP 이용한 WAS 에게 요청을 보낸다.
+        2. AWS는 관련된 Servlet 생성[ init() ] 또는 할당 한다.
+        3. 스레드 생성 또는 할당 받는다.
+        4. HttpServletRequest, HttpServletResponse 객체를 생성한다.
+        5. 스레드는 servlet service 메소드 호출한다.
+        6. service 메소드는 각 http method 요청에 맞게 doGet(),doPost() 등등 메소드를 호출한다.
+        7. doGet() 또는 doPost()는 HttpServletRequest, HttpServletResponse 매개변수 받아서 요청/응답 정보를 확인할수 있다.
+        8. HttpServletResponse 객체를 이용한 Web server 에게 응답 데이터를 전달한다.
+        9. 생성된 스레드는 종료하고, HttpServletRequest, HttpServletResponse 객체도 제거한다.
+
+    Client ------------HTTP----------> WAS (웹서버)
+        - 브라우저                     web server ----------> web container -------스레드 생성 ------ 서블릿 생성
+        - ajax                         - 정적파일               - 동적파일                             -init()
+        - 모바일                                                                                    -service()
+
+    [2-3] 서블릿의 생명주기
+        - init() : 해당 서블릿의 초기화 작업을 하는 메소드, 서블릿 당 1번 실행
+        - service() : 해당 서블릿이 사용자에게 서비스 하기 위해 정의한 메소드, 클라이언트 요청마다 실행
+            -doGet(), doPost(), doPut(), doDelete()
+        - doXX() : 비즈니스 로직 처리, 주로 DB 처리
+        - destroy : 해당 서블릿이 메모리에게 해제, 서버가 종료될때 실행
+        2. 생명 순서
+            1. 사용자로부터 요청이 들어오면 컨테이너로 요청 정보가 전해진다.
+            2. 컨테이너 배포서술사(xml)의 서블릿 맵핑 정보를 참조하여 해당 서블릿을 찾는다.
+                만약에 최초 요청이면 서블릿 생성 -> init()
+                최로 요청이 아니면 맵핑 정보를 찾아 서블릿 객체 요청 한다.
+            3. class loading 한다.
+            4. 요청에 대한 응답 처리 해준다.
+            5. 서블릿 객체 소멸된다.(서버가 종료될때)
+            6.
